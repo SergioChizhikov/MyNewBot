@@ -18,8 +18,16 @@
   let keyword = keywords[getRandom(0, keywords.length)];
 
   if (button !== undefined) {
-    input.value = keyword;
-    button.click();
+    let i = 0;
+    let timerId = setInterval(function(){
+      input.value += keyword[i];
+      i++;
+      if (i == keyword.length) {
+        clearInterval(timerId);
+        button.click();
+      }
+    }, 200)
+    
   } else {
     for (let i = 0; i < links.length; i++) {
       if (links[i].href.indexOf("napli.ru") != -1) {
