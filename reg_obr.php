@@ -28,9 +28,6 @@ if (!empty($_POST["name"]) && !empty($lastname = $_POST["lastname"])) {
 
 }
 
-
-
-
   //Пример подготовленного запроса
   // $sql = "INSERT INTO `users`(`name`, `lastname`, `email`, `pass`) VALUES (?, ?, ?, ?)";
   // $stmt = $mysqli->prepare($sql);
