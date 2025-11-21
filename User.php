@@ -37,11 +37,36 @@ class User
       $mysqli->query("INSERT INTO `users`(`name`, `lastname`, `email`, `pass`) VALUES ('$name', '$lastname', '$email', '$pass')");
       return json_encode(["result" => "success"]);
      }
-    // else {
-    //   return json_encode(["result" => "empty"]);
-    // }
+
   }
-  static function authUser() {
+  //Статический Метод авторизации пользователя
+  static function authUser($email, $pass) {
     global $mysqli;
+    $email = mb_strtolower(trim($email));
+    $pass = trim($pass);
+
+    $result = $mysqli->query("SELECT * FROM `users` WHERE `email`='$email'");
+    $result = $result->fetch_assoc();
+
+    // var_dump($result);
+    if (password_verify($pass, $result['pass'])) {
+      $_SESSION['id'] = $result['id'];
+
+      return json_encode(["result" => "ok"]);
+    } else {
+
+      return json_encode(["result" => "rejected"]);
+    }
+
   }
+
+  //Статический метод получения данных пользователя
+  static function getUser($userId) {
+    global $mysqli;
+
+    $result = $mysqli->query("SELECT * FROM `users` WHERE `id`='$userId'");
+    $result = $result->fetch_assoc();
+    return json_encode($result);
+  }
+
 }
